@@ -1,6 +1,6 @@
 # orient — canonical protocol (tool-agnostic)
 
-Single source of truth for the `orient` skill across every harness (Claude Code, Codex, and any other). Tool-specific behavior — how it's triggered, and any tool-specific menu options — lives in each tool's adapter, never here. Change the parse / mirror / confirm logic **here**, and let the adapters inherit it.
+Single source of truth for the `orient` skill across every harness (Claude Code, Codex, and any other). Tool-specific behavior — how it's triggered, and which menu legs each tool actually renders — lives in each tool's adapter; this file names every leg once (§3) so adapters can't drift, and each adapter says which it renders. Change the parse / mirror / confirm logic **here**, and let the adapters inherit it.
 
 ## What orient is
 
@@ -8,7 +8,7 @@ A session-opening alignment step. The user dictates a high-entropy braindump —
 
 ## When NOT to orient
 
-- A single scoped task ("fix the RLS flag on accounts") — just do it.
+- A single scoped task ("fix the RLS flag on cold_outbound_accounts") — just do it.
 - A pasted log, stack trace, spec, diff, or code block — read it, don't orient it.
 - A normal short question — answer it.
 
@@ -18,7 +18,7 @@ Pull from the dump:
 
 - **Goals** — the 1–3 outcomes the user wants _this session_. Outcomes, not tasks.
 - **Objectives** — the concrete steps under each goal.
-- **Tasks** — under any objective that bundles more than one action, the atomic, verb-first steps to do it. **Decompose only where it adds signal:** an objective that's already a single action ("set the RLS flag, confirm it sticks") stays a one-liner — no task list. Cap ~5 tasks per objective. Tasks here are a _read of the work_, not a contract: no dates, owners, estimates, or acceptance criteria — those belong to `goalify` / `/goal`. Crossing that line duplicates goalify.
+- **Tasks** — under any objective that bundles more than one action, the atomic, verb-first steps to do it. **Decompose only where it adds signal:** an objective that's already a single action ("set the RLS flag, confirm it sticks") stays a one-liner — no task list. Cap ~5 tasks per objective. Tasks here are a _read of the work_, not a contract: no dates, owners, estimates, or acceptance criteria — those belong to `goalify`. Crossing that line duplicates goalify.
 - **Not today** — things mentioned but out of scope ("eventually", "at some point", "not now", or trailed off).
 - **Open questions** — genuine ambiguities to resolve before sprinting.
 
@@ -89,37 +89,47 @@ A frame that fails any line gets fixed before rendering, not annotated after.
 
 ## 3 — Offer the menu, then STOP
 
-End every mirror with the confirm menu. The base menu, shared by all harnesses:
+End every mirror with the confirm menu. The base menu, always rendered:
 
 ```
   go            → lock this frame, work normally from here
-  fix <thing>   → correct the frame first
-  deepen        → re-scan the dump for anything this frame dropped
-  tasks <#>     → break goal # all the way down into its task tree
-  goalify <#>   → hand goal # to goalify (structure → autonomous goal-loop)
-  /goal <#>     → push goal # straight into /goal now (raw, no structuring)
-  grill <#>     → goal # is high-stakes: interview → locked PLAN.md → Codex attacks it (grill-me-codex chain)
+  goalify <#>   → structure goal # into a locked autonomous goal-loop
+  workflow <#>  → build + run a multi-agent harness on goal #
+  …or reply in plain words — corrections, "look again", "break goal N down"; the frame updates and re-renders
 ```
 
-When a goal is visibly high-stakes, say so in the mirror and recommend `grill <#>` for it — don't wait for Julian to remember the option exists. High-stakes for Julian's work, evidence-ranked: outbound sends (list/volume/sender) · client CRM or data writes · pricing or commercial commitments · client copy where the voice/persona could be wrong · send-infra/deliverability config · real-money moves · secrets · autonomous loops with external reach · client-visible deploys · bulk enrichment spend · client-facing automation output (reports/digests) · modifying human-approved copy. Classic software stakes (auth, schema, migrations) count where he actually builds — Supabase, dashboards.
+**The verbs are shortcuts, not a grammar.** Any free-text reply is valid: a correction re-renders the frame (the old `fix`), "look again" re-scans the dump for anything this frame dropped (the old `deepen`), "break goal N down" expands that goal's task tree (the old `tasks`). Only `go` locks the frame. Roughly 60% of real replies are plain words — treat free text as the default path, not a fallback.
 
-A tool adapter MAY append tool-specific options (Claude Code adds `workflow <#>`; Codex does not). After the menu, **stop**. Do not begin work. Do not read files "to get a head start." The mirror + menu is the whole response.
+Append these two lines **only when the mirror itself flags the condition** — the standing menu stays lean, and the line rides the in-mirror callout the paragraphs below already mandate:
+
+```
+  grill <#>     → goal # is high-stakes: interview → locked PLAN.md → Codex attacks it
+  blindspot <#> → goal # is unfamiliar territory: read-only unknowns sweep first
+```
+
+When a goal is visibly high-stakes, say so in the mirror and recommend `grill <#>` for it — don't wait for Julian to remember the option exists. High-stakes for Julian's work, evidence-ranked in an internal registry: outbound sends (list/volume/sender) · client CRM or data writes · pricing or commercial commitments · client copy where the voice/persona could be wrong · send-infra/deliverability config · real-money moves · secrets · autonomous loops with external reach · client-visible deploys · bulk enrichment spend · client-facing automation output (reports/digests) · modifying human-approved copy. Classic software stakes (auth, schema, migrations) count where he actually builds — Supabase, dashboards.
+
+When a goal visibly touches territory neither Julian nor the session knows — a new domain, an unfamiliar part of a codebase, or no prior art in the vault or memory — say so in the mirror and recommend `blindspot <#>`. Assess this only from what's already visible in the dump; do not make tool calls to decide (extends the "Kept lazy" rule).
+
+Adapters add or drop the tool-specific legs. `workflow <#>` and `grill <#>` are Claude Code legs: the Claude adapter renders `workflow` in the base menu and `grill` when a goal is flagged high-stakes; the Codex adapter renders neither — no dynamic-workflows engine, and the grill chain is Claude-driven — and instead points to Claude Code when the shape fits. `blindspot <#>` is tool-agnostic: any harness carrying finding-unknowns renders it contextually. After the menu, **stop**. Do not begin work. Do not read files "to get a head start." The mirror + menu is the whole response.
 
 ## 4 — On the response
 
 - **`go`** → print `Frame locked.` Hold the frame as the session's north star; before claiming any goal done, re-check it against its objectives and flag drift rather than silently expanding.
-- **`fix <thing>`** → update only that part of the frame, re-render, re-offer the menu.
-- **`deepen`** → one-shot re-parse of the original dump (plus any replies since), hunting for goals, objectives, tasks, or constraints the frame dropped — apply the five probe lenses while hunting. Re-render with anything new marked `(recovered)`, re-offer the menu. Same word, same meaning as goalify's lock-time `deepen`; never a gate.
-- **`tasks <#>`** → on-demand override of the auto-hybrid: break goal # _all the way_ down into its task tree, decomposing every objective under it into atomic steps — including the ones the default mirror left as one-liners. Re-render goal # with the expanded tasks, re-offer the menu. Still a read, not a contract (no dates / owners / criteria — that's goalify's job). Use it when you want the full breakdown before deciding `go` vs `goalify`. Narrower than `deepen` (which re-scans the whole dump for dropped content); this just deepens the task layer of one goal you already see.
+- **Free text — the default reply** → the verbs are shortcuts; plain words do the same jobs and re-render the frame:
+  - A **correction** ("no, goal 2 is really about X", "drop the third one") updates only that part of the frame, re-renders, re-offers the menu (the old `fix`).
+  - **"Look again" / "re-scan" / "what did you miss"** → one-shot re-parse of the original dump plus any replies since, hunting for goals, objectives, tasks, or constraints the frame dropped — apply the five probe lenses while hunting. Re-render with anything new marked `(recovered)`, re-offer the menu (the old `deepen`; same meaning as goalify's lock-time `deepen`, never a gate).
+  - **"Break goal N down"** → on-demand override of the auto-hybrid: break goal N _all the way_ down into its task tree, decomposing every objective under it into atomic steps — including the ones the default mirror left as one-liners. Re-render goal N with the expanded tasks, re-offer the menu. Still a read, not a contract (no dates / owners / criteria — that's goalify's job); this deepens only the task layer of one goal you already see (the old `tasks`).
+  - Anything else that reads as intent about the frame → apply it and re-render. When a reply is genuinely ambiguous, ask one sharp question instead of guessing.
 - **`goalify <#>`** → invoke the `goalify` skill on goal #. goalify owns classification, the mega-prompt, the lock, and the run from there.
-- **`/goal <#>`** → hand goal # straight into `/goal` as-is, no goalify structuring.
-- **`grill <#>`** → invoke the `grill-me-codex` skill on goal #: Act 1 interviews Julian until the plan is locked into `PLAN.md`, Act 2 has Codex adversarially review it (bounded rounds), optional Act 3 hands the build to Codex with Claude as diff-reviewer. For a goal that already has a written plan, `codex-plan-review` is the direct door (Act 2 only). Use for high-stakes goals where being wrong is expensive; goalify remains the door for autonomous routine builds.
+- **`blindspot <#>`** _(contextual — the menu line renders only when the mirror flagged goal # as unfamiliar territory, but the verb still works if typed against any goal)_ → run the finding-unknowns skill's Ritual 1 on goal #: sweep the territory (reads only — repo, docs, git history, memory), report 3–7 unknowns in plain English, each tagged `[needs Julian]` or `[I can resolve — doing it]`, fold them into the frame's Open questions, re-render, re-offer the menu. Like a re-scan, this is an escalation read, not work — the no-work-before-`go` rule stands.
+- **`grill <#>`** _(contextual — the menu line renders only when the mirror flagged goal # as high-stakes, but the verb still works if typed against any goal)_ → invoke the `grill-me-codex` skill on goal #: Act 1 interviews Julian until the plan is locked into `PLAN.md`, Act 2 has Codex adversarially review it (bounded rounds), optional Act 3 hands the build to Codex with Claude as diff-reviewer. For a goal that already has a written plan, `codex-plan-review` is the direct door (Act 2 only). Use for high-stakes goals where being wrong is expensive; goalify remains the door for autonomous routine builds.
 
-A tool adapter handles any options it added.
+A tool adapter handles any options it added (Claude Code: `workflow <#>`).
 
 ## Loop shape
 
-Per Anthropic's loop taxonomy: orient is one iteration of a **turn-based loop** whose stop condition is the confirm menu — the human is the evaluator. Deliberately no judge model, no turn caps, no `/goal` machinery inside orient itself; those live behind the escalation hatches (`goalify`, `/goal`, tool adapters). If orient ever needs a cap, that's a sign work leaked into it — the bug is the leak, not the missing cap.
+Per Anthropic's loop taxonomy: orient is one iteration of a **turn-based loop** whose stop condition is the confirm menu — the human is the evaluator. Deliberately no judge model, no turn caps, no goal-loop machinery inside orient itself; those live behind the escalation hatches (`goalify`, tool adapters). If orient ever needs a cap, that's a sign work leaked into it — the bug is the leak, not the missing cap.
 
 ## Kept lazy
 
@@ -130,7 +140,7 @@ The base mirror does **not** classify work-type — it's a fast reflection, not 
 - **The mirror is the whole turn.** Never start work before `go`. No file reads, edits, or tool calls beyond what's needed to render the frame.
 - **One to three goals, max.** More than that, ask which matter today.
 - **Decompose only where it adds signal.** Break an objective into tasks only when it bundles 2+ actions; atomic objectives stay one-liners. Never pad a frame with busywork tasks just to fill the tier.
-- **Tasks are a read, not a contract.** No dates, owners, estimates, or acceptance criteria in the mirror — those are `goalify` / `/goal` territory. orient shows the _shape_ of the work; goalify locks it.
+- **Tasks are a read, not a contract.** No dates, owners, estimates, or acceptance criteria in the mirror — those are `goalify` territory. orient shows the _shape_ of the work; goalify locks it.
 - **Quote, don't smooth.** Keep vague phrasing visible as an open question instead of inventing a polished version.
 - **Don't fabricate open questions.** If the dump is clear, say "No open questions — confirm and go."
 - **Don't orient a non-dump.** See "When NOT to orient" above.

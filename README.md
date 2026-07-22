@@ -38,16 +38,14 @@ Open questions (answer before I sprint)
   - #1: "half wired" — is the funnel chart rendering at all, or stubbed?
 
   go            → lock this frame, work normally from here
-  fix <thing>   → correct the frame first
-  deepen        → re-scan the dump for anything this frame dropped
-  tasks <#>     → break goal # all the way down into its task tree
-  goalify <#>   → structure goal # into a locked, autonomous /goal run
-  /goal <#>     → push goal # straight into an autonomous run, raw
-  grill <#>     → goal # is high-stakes: interview me, lock a plan, have a second model attack it
+  goalify <#>   → structure goal # into a locked autonomous goal-loop
   workflow <#>  → hand goal # to a workflow architect (build + run a multi-agent harness)
+  …or reply in plain words — corrections, "look again", "break goal N down"
 ```
 
-The menu is a router. `go` locks the frame and works normally. The other seven verbs escalate a single goal to the right amount of machinery: a full task breakdown, a locked autonomous contract, an adversarial plan review, or a multi-agent workflow. One voice note in, the right weight of process out.
+The standing menu is a three-way router: `go` locks the frame, `goalify` structures one goal into an autonomous run, and `workflow` hands a workflow-shaped goal to a multi-agent process. Plain words are first-class too: corrections, "look again," and "break goal N down" work without special syntax. The cut came from 82 real menu renders; 60% of replies were free text.
+
+`grill <#>` appears only when the mirror flags a goal as high-stakes. `blindspot <#>` appears only when it flags unfamiliar territory.
 
 ### What's actually inside
 
@@ -81,7 +79,7 @@ Claude Code auto-discovers it. Trigger it by dictating a messy multi-topic brain
 
 ### One caveat
 
-`orient` is the front door to my larger setup. The escalation verbs (`goalify`, `/goal`, `grill`, `workflow`) route to sibling skills (`goalify`, `grill-me-codex`, `workflow-architect`) that live only in my setup. `orient` works on its own: the mirror, the parse rules, and the confirm gate need nothing else. Treat the escalation verbs as a list of where a goal could route, and build your own back ends, or use only the mirror-and-confirm.
+`orient` is the front door to my larger setup. The escalation verbs (`goalify`, `workflow`, and the contextual `grill` / `blindspot`) route to sibling skills (`goalify`, `workflow-architect`, `grill-me-codex`, `finding-unknowns`) that live only in my setup. `orient` works on its own: the mirror, the parse rules, and the confirm gate need nothing else. Treat the escalation verbs as a list of where a goal could route, and build your own back ends, or use only the mirror-and-confirm.
 
 My setup also pairs `orient` with a `UserPromptSubmit` nudge hook, `orient-detect.js`, for more reliable auto-triggering. The hook lives outside this repo; Claude Code still auto-fires from description matching, just less reliably.
 

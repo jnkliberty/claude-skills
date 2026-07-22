@@ -4,7 +4,7 @@ Few-shots in Julian's real dictation voice. The inputs are deliberately messy (f
 
 ---
 
-## Example 1 — multi-topic dump → `go`
+## Example 1 — multi-topic dump → free-text correction → `go`
 
 **Julian (voice):**
 
@@ -25,22 +25,33 @@ Objectives & tasks
      (atomic — no breakdown needed)
 
 Not today (heard it, parked it)
-  - investor invoice table ("not really today")
+  - Investor invoice table ("not really today")
 
 Open questions (answer before I sprint)
   - #1: "half wired" — is the funnel chart rendering at all, or stubbed?
 
-  go            → lock this frame, I work normally from here
-  fix <thing>   → correct the frame first
-  deepen        → re-scan the dump for anything this frame dropped
-  tasks <#>     → break goal # all the way down into its task tree
-  goalify <#>   → hand goal # to goalify (structure → autonomous goal-loop)
-  /goal <#>     → push goal # straight into /goal now (raw, no structuring)
+  go            → lock this frame, work normally from here
+  goalify <#>   → structure goal # into a locked autonomous goal-loop
+  workflow <#>  → build + run a multi-agent harness on goal #
+  …or reply in plain words — corrections, "look again", "break goal N down"; the frame updates and re-renders
 ```
 
-**Julian:** `go`
+**Julian:** `the funnel chart thing is actually done, drop it — rest is right, go`
 
-**orient:** `Frame locked.` → then works #1 then #2, re-checking each against its objectives before calling it done.
+**orient:** (plain words, not a menu verb — applies the correction, re-renders only what changed, honors the `go`)
+
+```
+#1 finish the attribution view  (updated)
+   - verify the attribution query returns correct numbers
+   dropped: funnel chart wiring — you said it's done, which also
+   answers the open question (it's rendering, not stubbed)
+
+Frame locked.
+```
+
+→ then works #1 (attribution query), then #2 (RLS flag), re-checking each against its objectives before calling it done.
+
+_The reply was free text, not a menu verb — the default path. Roughly 60% of real replies look like this: a correction with `go` tucked on the end. orient updates only the part that changed and locks; it doesn't re-print the whole frame or make Julian re-type a verb._
 
 ---
 
@@ -68,14 +79,12 @@ Not today
 
 Open questions
   - No open questions — this reads as a clear build. Confirm and go,
-    or hand it to goalify to harden into a /goal run.
+    or hand it to goalify to structure into an autonomous goal-loop.
 
-  go            → lock this frame, I work normally from here
-  fix <thing>   → correct the frame first
-  deepen        → re-scan the dump for anything this frame dropped
-  tasks 1       → break goal 1 all the way down into its task tree
-  goalify 1     → hand goal 1 to goalify (structure → autonomous goal-loop)
-  /goal 1       → push goal 1 straight into /goal now (raw, no structuring)
+  go          → lock this frame, work normally from here
+  goalify 1   → structure goal 1 into a locked autonomous goal-loop
+  workflow 1  → build + run a multi-agent harness on goal 1
+  …or reply in plain words — corrections, "look again", "break goal N down"; the frame updates and re-renders
 ```
 
 **Julian:** `goalify 1`
@@ -118,7 +127,7 @@ concrete first goal hiding in here I should mirror instead?
 **Julian (paste):**
 
 > ```
-> Error: relation "accounts" does not exist
+> Error: relation "cold_outbound_accounts" does not exist
 >     at Parser.parseErrorMessage (/node_modules/pg/lib/...)
 >     at Socket.<anonymous> ...
 > ```
