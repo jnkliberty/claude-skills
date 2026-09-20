@@ -143,7 +143,7 @@ Any `no` becomes a line in the spec under a `Blocked on` heading. Do not design 
 - **Draft, don't send.** Every spec touching an outbound surface, client CRM, or a published page carries a human approval field. Say the gate out loud before drafting: "drafting only, you send."
 - **Never drive a real browser for scraping.** Route any scraping step through a sandboxed or headless browser instead.
 - **Client copy uses that client's own voice skill**, if one exists.
-- **The four house-banned words never appear** in the spec or in anything it produces: leverage, synergy, disrupt, game-changer.
+- **The house-banned words never appear** in the spec or in anything it produces. The `stop-slop` skill on this shelf carries the list.
 - **High-stakes specs go through a plan review before execution** if they touch a registry stake (outbound sends, client CRM writes, pricing, send infrastructure, real money).
 
 ## Worked example: illustrative only
