@@ -14,6 +14,7 @@ A small public shelf of the [Claude Code](https://docs.anthropic.com/en/docs/cla
 | [`stop-slop`](./stop-slop) | Strips AI writing tells from prose: banned phrases, negation patterns, rhythm fixes | `cp -r stop-slop ~/.claude/skills/` |
 | [`radical-candor`](./radical-candor) | A simplicity and candor audit for a project, feature, architecture, or strategy | `cp -r radical-candor ~/.claude/skills/` |
 | [`harden`](./harden) | Makes an interface resilient: error states, text overflow, localization, edge cases | `cp -r harden ~/.claude/skills/` |
+| [`gtm-engineer`](./gtm-engineer) | Composes the marketing skills into one recurring client system: input an outcome, output a routed job spec and the skills that run each step | `cp -r gtm-engineer ~/.claude/skills/` |
 
 Every folder has a `SKILL.md` that Claude Code loads on its own once the folder sits in `~/.claude/skills/`. Some carry a `references/` folder the skill reads when it runs, and `cold-email` and `lead-magnets` ship an `evals/` file with test prompts. Nothing here depends on anything outside its own folder.
 
