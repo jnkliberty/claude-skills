@@ -2,7 +2,22 @@
 
 A small public shelf of the [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skills I run. These pieces proved useful enough to hand to someone else.
 
-First one up: `orient`.
+## The shelf
+
+| Skill | What it does | Install |
+| --- | --- | --- |
+| [`orient`](./orient) | Turns a session-opening braindump into a confirmed frame before any work starts | `cp -r orient ~/.claude/skills/` |
+| [`cold-email`](./cold-email) | B2B cold emails and follow-up sequences: subject lines, openers, CTAs, personalization, benchmarks | `cp -r cold-email ~/.claude/skills/` |
+| [`lead-magnets`](./lead-magnets) | Plans a lead magnet from an audience and an offer, with format guide and conversion benchmarks | `cp -r lead-magnets ~/.claude/skills/` |
+| [`signal-interpreter`](./signal-interpreter) | Reads a raw GTM signal (a hire, a funding round, a tech change) into relevance, strength, confidence, and what to say | `cp -r signal-interpreter ~/.claude/skills/` |
+| [`linkedin-intelligence`](./linkedin-intelligence) | Hook formulas, timing, and format rules from an analysis of 62,130 viral posts (credit: David Arnoux, viralbrain.ai) | `cp -r linkedin-intelligence ~/.claude/skills/` |
+| [`stop-slop`](./stop-slop) | Strips AI writing tells from prose: banned phrases, negation patterns, rhythm fixes | `cp -r stop-slop ~/.claude/skills/` |
+| [`radical-candor`](./radical-candor) | A simplicity and candor audit for a project, feature, architecture, or strategy | `cp -r radical-candor ~/.claude/skills/` |
+| [`harden`](./harden) | Makes an interface resilient: error states, text overflow, localization, edge cases | `cp -r harden ~/.claude/skills/` |
+
+Every folder has a `SKILL.md` that Claude Code loads on its own once the folder sits in `~/.claude/skills/`. Some carry a `references/` folder the skill reads when it runs, and `cold-email` and `lead-magnets` ship an `evals/` file with test prompts. Nothing here depends on anything outside its own folder.
+
+The long write-up below is for `orient`, the first skill on the shelf and the one with the most moving parts.
 
 ---
 
