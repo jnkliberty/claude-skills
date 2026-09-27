@@ -7,11 +7,11 @@ A small public shelf of the skills I run, for any agent that reads skill files: 
 | Skill | What it does |
 | --- | --- |
 | [`orient`](./orient) | Turns a session-opening braindump into a confirmed frame before any work starts |
-| [`cold-email`](./cold-email) | B2B cold emails and follow-up sequences: subject lines, openers, CTAs, personalization, benchmarks |
-| [`lead-magnets`](./lead-magnets) | Plans a lead magnet from an audience and an offer, with format guide and conversion benchmarks |
-| [`signal-interpreter`](./signal-interpreter) | Reads a raw GTM signal (a hire, a funding round, a tech change) into relevance, strength, confidence, and what to say |
+| [`cold-email`](./cold-email) | B2B cold emails and follow-up sequences: subject lines, openers, CTAs, personalization, benchmarks (adapted from Corey Haines, [marketingskills](https://github.com/coreyhaines31/marketingskills)) |
+| [`lead-magnets`](./lead-magnets) | Plans a lead magnet from an audience and an offer, with format guide and conversion benchmarks (from Corey Haines, [marketingskills](https://github.com/coreyhaines31/marketingskills)) |
+| [`signal-interpreter`](./signal-interpreter) | Reads a raw GTM signal (a hire, a funding round, a tech change) into relevance, strength, confidence, and what to say (from Swan, [gtm-skills](https://github.com/swan-gtm/gtm-skills)) |
 | [`linkedin-intelligence`](./linkedin-intelligence) | Hook formulas, timing, and format rules from an analysis of 62,130 viral posts (credit: David Arnoux, viralbrain.ai) |
-| [`stop-slop`](./stop-slop) | Strips AI writing tells from prose: banned phrases, negation patterns, rhythm fixes |
+| [`stop-slop`](./stop-slop) | Strips AI writing tells from prose: banned phrases, negation patterns, rhythm fixes (from Hardik Pandya, [stop-slop](https://github.com/hardikpandya/stop-slop)) |
 | [`radical-candor`](./radical-candor) | A simplicity and candor audit for a project, feature, architecture, or strategy |
 | [`harden`](./harden) | Makes an interface resilient: error states, text overflow, localization, edge cases |
 | [`gtm-engineer`](./gtm-engineer) | Composes the marketing skills into one recurring client system: input an outcome, output a routed job spec and the skills that run each step |
@@ -120,6 +120,15 @@ Trigger it by dictating a messy multi-topic braindump at the start of a session.
 In Claude Code, my setup also pairs `orient` with a `UserPromptSubmit` nudge hook, `orient-detect.js`, for more reliable auto-triggering. The hook is a Claude Code feature and lives outside this repo. Without it, an agent still fires `orient` from description matching, just less reliably.
 
 ---
+
+## Credits
+
+Four skills here started as other people's MIT-licensed work. Each folder keeps the original license as `LICENSE-upstream`.
+
+- `signal-interpreter`: Swan, [swan-gtm/gtm-skills](https://github.com/swan-gtm/gtm-skills). Copyright (c) 2026 Swan.
+- `cold-email`, `lead-magnets`: Corey Haines, [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills). Copyright (c) 2025 Corey Haines.
+- `stop-slop`: Hardik Pandya, [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop). Copyright (c) 2025 Hardik Pandya.
+- `linkedin-intelligence`: data from David Arnoux, viralbrain.ai.
 
 ## License
 
