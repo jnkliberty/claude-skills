@@ -18,6 +18,10 @@ A small public shelf of the [Claude Code](https://docs.anthropic.com/en/docs/cla
 
 Every folder has a `SKILL.md` that Claude Code loads on its own once the folder sits in `~/.claude/skills/`. Some carry a `references/` folder the skill reads when it runs, and `cold-email` and `lead-magnets` ship an `evals/` file with test prompts. Nothing here depends on anything outside its own folder.
 
+## GTM brain
+
+The [GTM brain](https://github.com/jnkliberty/gtm-brain) is a separate MIT starter for shared marketing and sales records. It includes `account-handoff` and nine CRM skills, plus the account, signal, rules, and sample CSV files those skills read. Follow its five-minute walkthrough to run the fictional Northwind Robotics example. Keep the brain files with the skills; copying a skill folder alone leaves out its inputs.
+
 The long write-up below is for `orient`, the first skill on the shelf and the one with the most moving parts.
 
 ---
