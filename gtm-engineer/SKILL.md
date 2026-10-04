@@ -26,7 +26,7 @@ The routing table names leaf skills by role, not by exact package. The ones on t
 | --- | --- |
 | A campaign runner. It never sends, publishes, or spends. | The leaf skill, after approval |
 | The SEO audit | `seo-audit`, `seo-technical`, `seo-plan` |
-| A goal contract | `goalify` locks a `/goal` for one autonomous run. This produces a job spec for a repeating agent |
+| A goal contract | `goalify` locks a goal contract for one autonomous run. This produces a job spec for a repeating agent |
 | A workflow build | `workflow-architect` scaffolds the harness. This decides what the harness should do |
 | A single deliverable | `cold-email`, `copywriting`, `seo-page`, whichever leaf matches |
 

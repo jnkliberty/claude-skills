@@ -1,6 +1,7 @@
 ---
 name: linkedin-intelligence
 description: Data-backed LinkedIn optimization layer for producing high-performing LinkedIn content. Based on 62,130 viral posts analyzed (David Arnoux / viralbrain.ai, January 2026, BREW360 algorithm).
+# Optional Claude Code settings. Other agents ignore model and allowed-tools and use their own model and web search.
 model: sonnet
 allowed-tools:
   - WebSearch
