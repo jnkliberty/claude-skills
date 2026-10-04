@@ -11,7 +11,7 @@ Input: an outcome someone wants. Output: a written agent job spec, plus the rout
 
 ## What this skill expects
 
-The routing table names leaf skills by role, not by exact package. The ones on this shelf (`cold-email`, `lead-magnets`, `signal-interpreter`, `linkedin-intelligence`, `stop-slop`) install straight from this repo. The rest (`seo-*`, `customer-research`, `territory-signal-digest`, and others named below) are placeholders for whatever tool or skill does that job in your own setup. Swap them freely; the routing and the job-spec format are the part that travels.
+The routing table names leaf skills by role, not by exact package. `linkedin-intelligence` installs straight from this repo. `cold-email` and `lead-magnets` come from Corey Haines's [marketingskills](https://github.com/coreyhaines31/marketingskills), `signal-interpreter` from Din Arbel in Swan's [gtm-skills](https://github.com/swan-gtm/gtm-skills), and `stop-slop` from Hardik Pandya's [stop-slop](https://github.com/hardikpandya/stop-slop). The rest (`seo-*`, `customer-research`, `territory-signal-digest`, and others named below) are placeholders for whatever tool or skill does that job in your own setup. Swap them freely; the routing and the job-spec format are the part that travels.
 
 ## When to use it
 
@@ -143,7 +143,7 @@ Any `no` becomes a line in the spec under a `Blocked on` heading. Do not design 
 - **Draft, don't send.** Every spec touching an outbound surface, client CRM, or a published page carries a human approval field. Say the gate out loud before drafting: "drafting only, you send."
 - **Never drive a real browser for scraping.** Route any scraping step through a sandboxed or headless browser instead.
 - **Client copy uses that client's own voice skill**, if one exists.
-- **The house-banned words never appear** in the spec or in anything it produces. The `stop-slop` skill on this shelf carries the list.
+- **The house-banned words never appear** in the spec or in anything it produces. The `stop-slop` skill ([hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop)) carries a banned-word list; add your house words to it.
 - **High-stakes specs go through a plan review before execution** if they touch a registry stake (outbound sends, client CRM writes, pricing, send infrastructure, real money).
 
 ## Worked example: illustrative only

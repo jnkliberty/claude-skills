@@ -7,16 +7,11 @@ A small public shelf of the skills I run, for any agent that reads skill files: 
 | Skill | What it does |
 | --- | --- |
 | [`orient`](./orient) | Turns a session-opening braindump into a confirmed frame before any work starts |
-| [`cold-email`](./cold-email) | B2B cold emails and follow-up sequences: subject lines, openers, CTAs, personalization, benchmarks |
-| [`lead-magnets`](./lead-magnets) | Plans a lead magnet from an audience and an offer, with format guide and conversion benchmarks |
-| [`signal-interpreter`](./signal-interpreter) | Reads a raw GTM signal (a hire, a funding round, a tech change) into relevance, strength, confidence, and what to say |
 | [`linkedin-intelligence`](./linkedin-intelligence) | Hook formulas, timing, and format rules from an analysis of 62,130 viral posts (credit: David Arnoux, viralbrain.ai) |
-| [`stop-slop`](./stop-slop) | Strips AI writing tells from prose: banned phrases, negation patterns, rhythm fixes |
 | [`radical-candor`](./radical-candor) | A simplicity and candor audit for a project, feature, architecture, or strategy |
-| [`harden`](./harden) | Makes an interface resilient: error states, text overflow, localization, edge cases |
 | [`gtm-engineer`](./gtm-engineer) | Composes the marketing skills into one recurring client system: input an outcome, output a routed job spec and the skills that run each step |
 
-Every folder has a `SKILL.md` that your agent loads on its own once the folder sits in its skills folder. Some carry a `references/` folder the skill reads when it runs, and `cold-email` and `lead-magnets` ship an `evals/` file with test prompts. Nothing here depends on anything outside its own folder.
+Every folder has a `SKILL.md` that your agent loads on its own once the folder sits in its skills folder. Some carry a `references/` folder the skill reads when it runs. Nothing here depends on anything outside its own folder.
 
 ## Install
 
@@ -26,21 +21,30 @@ Clone the repo, then copy a skill folder into your agent's skills folder:
 - **Codex:** `~/.agents/skills/` ([docs](https://developers.openai.com/codex/skills))
 - **Any other agent:** point the agent at the folder's `SKILL.md`.
 
-For example, to install `cold-email`:
+For example, to install `orient`:
 
 ```bash
 git clone https://github.com/jnkliberty/gtm-run-skills
 
 # Claude Code
-mkdir -p ~/.claude/skills && cp -r gtm-run-skills/cold-email ~/.claude/skills/
+mkdir -p ~/.claude/skills && cp -r gtm-run-skills/orient ~/.claude/skills/
 
 # Codex
-mkdir -p ~/.agents/skills && cp -r gtm-run-skills/cold-email ~/.agents/skills/
+mkdir -p ~/.agents/skills && cp -r gtm-run-skills/orient ~/.agents/skills/
 ```
 
 ## GTM brain
 
 The [GTM brain](https://github.com/jnkliberty/gtm-brain) is a separate MIT starter for shared marketing and sales records. It includes `account-handoff` and nine CRM skills, plus the account, signal, rules, and sample CSV files those skills read. Follow its five-minute walkthrough to run the fictional Northwind Robotics example. Keep the brain files with the skills; copying a skill folder alone leaves out its inputs.
+
+## Skills from other authors
+
+I also run skills other people wrote. Get them from their authors:
+
+- `cold-email` and `lead-magnets`: Corey Haines, [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
+- `signal-interpreter`: Din Arbel, in Swan's [swan-gtm/gtm-skills](https://github.com/swan-gtm/gtm-skills)
+- `stop-slop`: Hardik Pandya, [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop)
+- `harden`: part of Paul Bakaus's [Impeccable](https://github.com/pbakaus/impeccable)
 
 The long write-up below is for `orient`, the first skill on the shelf and the one with the most moving parts.
 
