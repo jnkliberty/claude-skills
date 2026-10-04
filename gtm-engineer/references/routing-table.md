@@ -1,6 +1,6 @@
 # Routing table: outcome to leaf skills
 
-Companion to `../SKILL.md`. Leaf skills are named by role. Where a skill on this shelf covers the step, it's named directly; everything else is a placeholder for whatever tool or skill does that job in your setup.
+Companion to `../SKILL.md`. Leaf skills are named by role. `linkedin-intelligence` is on this shelf; `cold-email`, `lead-magnets`, `signal-interpreter`, and `stop-slop` come from their authors, listed in `../SKILL.md`. Everything else is a placeholder for whatever tool or skill does that job in your setup.
 
 Voice skills are client-repo scoped and do not appear in a global skills directory. Find them in the client repo's own skills folder (`.claude/skills/<name>-voice/` for Claude Code, `.agents/skills/<name>-voice/` for Codex), if the client has one.
 
