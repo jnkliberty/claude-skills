@@ -43,7 +43,7 @@ Before auditing, establish context.
 **Read before auditing:**
 
 - Read key source files, configs, and documentation relevant to the audit scope.
-- Use Glob and Grep to understand the structure. Read enough to form an informed opinion.
+- Use file search and text search to understand the structure. Read enough to form an informed opinion.
 - Never audit blind. If you haven't read the relevant code or documents, read them first.
 
 ## Audit Process

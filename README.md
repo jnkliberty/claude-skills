@@ -1,22 +1,42 @@
-# claude-skills
+# gtm-run-skills
 
-A small public shelf of the [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skills I run. These pieces proved useful enough to hand to someone else.
+A small public shelf of the skills I run, for any agent that reads skill files: Claude Code, Codex, and others. These pieces proved useful enough to hand to someone else.
 
 ## The shelf
 
-| Skill | What it does | Install |
-| --- | --- | --- |
-| [`orient`](./orient) | Turns a session-opening braindump into a confirmed frame before any work starts | `cp -r orient ~/.claude/skills/` |
-| [`cold-email`](./cold-email) | B2B cold emails and follow-up sequences: subject lines, openers, CTAs, personalization, benchmarks | `cp -r cold-email ~/.claude/skills/` |
-| [`lead-magnets`](./lead-magnets) | Plans a lead magnet from an audience and an offer, with format guide and conversion benchmarks | `cp -r lead-magnets ~/.claude/skills/` |
-| [`signal-interpreter`](./signal-interpreter) | Reads a raw GTM signal (a hire, a funding round, a tech change) into relevance, strength, confidence, and what to say | `cp -r signal-interpreter ~/.claude/skills/` |
-| [`linkedin-intelligence`](./linkedin-intelligence) | Hook formulas, timing, and format rules from an analysis of 62,130 viral posts (credit: David Arnoux, viralbrain.ai) | `cp -r linkedin-intelligence ~/.claude/skills/` |
-| [`stop-slop`](./stop-slop) | Strips AI writing tells from prose: banned phrases, negation patterns, rhythm fixes | `cp -r stop-slop ~/.claude/skills/` |
-| [`radical-candor`](./radical-candor) | A simplicity and candor audit for a project, feature, architecture, or strategy | `cp -r radical-candor ~/.claude/skills/` |
-| [`harden`](./harden) | Makes an interface resilient: error states, text overflow, localization, edge cases | `cp -r harden ~/.claude/skills/` |
-| [`gtm-engineer`](./gtm-engineer) | Composes the marketing skills into one recurring client system: input an outcome, output a routed job spec and the skills that run each step | `cp -r gtm-engineer ~/.claude/skills/` |
+| Skill | What it does |
+| --- | --- |
+| [`orient`](./orient) | Turns a session-opening braindump into a confirmed frame before any work starts |
+| [`cold-email`](./cold-email) | B2B cold emails and follow-up sequences: subject lines, openers, CTAs, personalization, benchmarks |
+| [`lead-magnets`](./lead-magnets) | Plans a lead magnet from an audience and an offer, with format guide and conversion benchmarks |
+| [`signal-interpreter`](./signal-interpreter) | Reads a raw GTM signal (a hire, a funding round, a tech change) into relevance, strength, confidence, and what to say |
+| [`linkedin-intelligence`](./linkedin-intelligence) | Hook formulas, timing, and format rules from an analysis of 62,130 viral posts (credit: David Arnoux, viralbrain.ai) |
+| [`stop-slop`](./stop-slop) | Strips AI writing tells from prose: banned phrases, negation patterns, rhythm fixes |
+| [`radical-candor`](./radical-candor) | A simplicity and candor audit for a project, feature, architecture, or strategy |
+| [`harden`](./harden) | Makes an interface resilient: error states, text overflow, localization, edge cases |
+| [`gtm-engineer`](./gtm-engineer) | Composes the marketing skills into one recurring client system: input an outcome, output a routed job spec and the skills that run each step |
 
-Every folder has a `SKILL.md` that Claude Code loads on its own once the folder sits in `~/.claude/skills/`. Some carry a `references/` folder the skill reads when it runs, and `cold-email` and `lead-magnets` ship an `evals/` file with test prompts. Nothing here depends on anything outside its own folder.
+Every folder has a `SKILL.md` that your agent loads on its own once the folder sits in its skills folder. Some carry a `references/` folder the skill reads when it runs, and `cold-email` and `lead-magnets` ship an `evals/` file with test prompts. Nothing here depends on anything outside its own folder.
+
+## Install
+
+Clone the repo, then copy a skill folder into your agent's skills folder:
+
+- **Claude Code:** `~/.claude/skills/` ([docs](https://code.claude.com/docs/en/skills))
+- **Codex:** `~/.agents/skills/` ([docs](https://developers.openai.com/codex/skills))
+- **Any other agent:** point the agent at the folder's `SKILL.md`.
+
+For example, to install `cold-email`:
+
+```bash
+git clone https://github.com/jnkliberty/gtm-run-skills
+
+# Claude Code
+mkdir -p ~/.claude/skills && cp -r gtm-run-skills/cold-email ~/.claude/skills/
+
+# Codex
+mkdir -p ~/.agents/skills && cp -r gtm-run-skills/cold-email ~/.agents/skills/
+```
 
 ## GTM brain
 
@@ -65,7 +85,7 @@ Open questions (answer before I sprint)
 
 The standing menu is a three-way router: `go` locks the frame, `goalify` structures one goal into an autonomous run, and `workflow` hands a workflow-shaped goal to a multi-agent process. Plain words are first-class too: corrections, "look again," and "break goal N down" work without special syntax. The cut came from 82 real menu renders; 60% of replies were free text.
 
-`grill <#>` appears only when the mirror flags a goal as high-stakes. `blindspot <#>` appears only when it flags unfamiliar territory.
+`grill <#>` appears only when the mirror flags a goal as high-stakes. `blindspot <#>` appears only when it flags unfamiliar territory. `workflow` and `grill` are Claude Code legs; other agents leave them out of the menu.
 
 ### What's actually inside
 
@@ -83,25 +103,21 @@ The mirror is the visible output. The parse rules behind it do the work, all spe
 
 | File          | What it is                                                              |
 | ------------- | ---------------------------------------------------------------------- |
-| `SKILL.md`    | The skill Claude Code loads: when to fire, the Claude-specific bits    |
+| `SKILL.md`    | The skill your agent loads: when to fire, plus an optional Claude Code section |
 | `PROTOCOL.md` | The parse → mirror → confirm logic, tool-agnostic (Codex reads it too)  |
 | `EXAMPLES.md` | Worked few-shots in real dictation voice, including an anti-example     |
 
-### Install
+### Install and trigger it
 
-Drop the folder into your skills directory:
+Copy the `orient` folder into your agent's skills folder (steps in [Install](#install)).
 
-```bash
-cp -r orient ~/.claude/skills/orient
-```
-
-Claude Code auto-discovers it. Trigger it by dictating a messy multi-topic braindump at the start of a session, or type `/orient <your dump>`.
+Trigger it by dictating a messy multi-topic braindump at the start of a session. To call it by name, type `/orient <your dump>` in Claude Code or `$orient <your dump>` in Codex.
 
 ### One caveat
 
 `orient` is the front door to my larger setup. The escalation verbs (`goalify`, `workflow`, and the contextual `grill` / `blindspot`) route to sibling skills (`goalify`, `workflow-architect`, `grill-me-codex`, `finding-unknowns`) that live only in my setup. `orient` works on its own: the mirror, the parse rules, and the confirm gate need nothing else. Treat the escalation verbs as a list of where a goal could route, and build your own back ends, or use only the mirror-and-confirm.
 
-My setup also pairs `orient` with a `UserPromptSubmit` nudge hook, `orient-detect.js`, for more reliable auto-triggering. The hook lives outside this repo; Claude Code still auto-fires from description matching, just less reliably.
+In Claude Code, my setup also pairs `orient` with a `UserPromptSubmit` nudge hook, `orient-detect.js`, for more reliable auto-triggering. The hook is a Claude Code feature and lives outside this repo. Without it, an agent still fires `orient` from description matching, just less reliably.
 
 ---
 

@@ -2,7 +2,7 @@
 
 Companion to `../SKILL.md`. Leaf skills are named by role. Where a skill on this shelf covers the step, it's named directly; everything else is a placeholder for whatever tool or skill does that job in your setup.
 
-Voice skills are client-repo scoped and do not appear in a global skills directory. Find them at `<client repo>/.claude/skills/<name>-voice/`, if the client has one.
+Voice skills are client-repo scoped and do not appear in a global skills directory. Find them in the client repo's own skills folder (`.claude/skills/<name>-voice/` for Claude Code, `.agents/skills/<name>-voice/` for Codex), if the client has one.
 
 ---
 
